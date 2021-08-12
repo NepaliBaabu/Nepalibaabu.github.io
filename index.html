@@ -117,4 +117,57 @@ main {
       </div>
     </main>
 </body>
+	<script>
+		"use strict";
+
+let randomNum = Math.trunc(Math.random() * 25) + 1;
+let score = Number(document.querySelector(".score").textContent);
+let highscore = 0;
+
+const displayMessage = function (message) {
+  document.querySelector(".message").textContent = message;
+};
+
+document.querySelector(".submit").addEventListener("click", function () {
+  let guess = Number(document.querySelector("#guess").value);
+  if (!guess) {
+    displayMessage("Please enter a number from 1-25.");
+  } else if (guess === randomNum) {
+    displayMessage("CONGRATULATIONS! You guessed the right number!");
+    document.querySelector("#guess").style.width = "30vw";
+    document.querySelector("#guess").style.fontWeight = "600";
+    document.querySelector("#guess").style.color = "#487eb0";
+    document.querySelector(".message").style.color = "#487eb0";
+
+    if (score > highscore) {
+      highscore = score;
+      document.querySelector(".highscore").textContent = highscore;
+    }
+  } else if (guess !== randomNum) {
+    if (score > 1) {
+      displayMessage(guess > randomNum ? "Too high!" : "Too low!");
+      score--;
+      document.querySelector(".score").textContent = score;
+    } else {
+      displayMessage("GAME OVER! Please try again.");
+      document.querySelector("#guess").style.color = "#c23616";
+      document.querySelector(".message").style.color = "#c23616";
+      document.querySelector(".score").textContent = 0;
+    }
+  }
+});
+
+document.querySelector(".again").addEventListener("click", function () {
+  randomNum = Math.trunc(Math.random() * 25) + 1;
+  score = 20;
+  displayMessage("Enter your guess");
+  document.querySelector(".score").textContent = score;
+  document.querySelector("#guess").value = "";
+  document.querySelector("#guess").style.width = "20vw";
+  document.querySelector("#guess").style.fontWeight = "300";
+  document.querySelector("#guess").style.color = "#010101";
+  document.querySelector(".message").style.color = "#010101";
+});
+
+	</script>
 </html>
